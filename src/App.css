@@ -196,3 +196,17 @@ body {
   border-color: #F59E0B;
   color: #1E2530;
 }
+.clock {
+  position: fixed;
+  top: 16px;
+  right: 24px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.1rem;
+  color: #2DD4BF;
+  background: #1E2530;
+  padding: 6px 14px;
+  border-radius: 6px;
+  border: 1px solid #2DD4BF;
+  letter-spacing: 1px;
+  z-index: 10;
+}

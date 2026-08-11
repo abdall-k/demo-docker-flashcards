@@ -1,6 +1,5 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
-
 const cards = [
   {
     step: 1,
@@ -52,29 +51,33 @@ const cards = [
     explanation: "L'application est accessible depuis n'importe où, avec la garantie qu'elle se comporte exactement pareil que sur la machine de développement.",
   },
 ]
-
 function App() {
   const [index, setIndex] = useState(0)
   const [flipped, setFlipped] = useState(false)
+  const [time, setTime] = useState(new Date())
+
+  useEffect(() => {
+    const timer = setInterval(() => setTime(new Date()), 1000)
+    return () => clearInterval(timer)
+  }, [])
+
+  const formattedTime = time.toLocaleTimeString('fr-FR')
 
   const card = cards[index]
-
   const goTo = (newIndex) => {
     setFlipped(false)
     setIndex(newIndex)
   }
-
   const next = () => goTo((index + 1) % cards.length)
   const prev = () => goTo((index - 1 + cards.length) % cards.length)
-
   return (
     <div className="app">
+      <div className="clock">{formattedTime}</div>
       <div className="scanline" />
       <header className="header">
         <span className="eyebrow">// flashcards de déploiement</span>
         <h1>Déploiement Docker <span className="accent">+ Demo</span></h1>
       </header>
-
       <div className="progress">
         {cards.map((c, i) => (
           <span
@@ -84,7 +87,6 @@ function App() {
           />
         ))}
       </div>
-
       <div className="card-scene" onClick={() => setFlipped(!flipped)}>
         <div className={`card ${flipped ? 'flipped' : ''}`}>
           <div className="card-face card-front">
@@ -100,7 +102,6 @@ function App() {
           </div>
         </div>
       </div>
-
       <div className="nav">
         <button className="nav-btn" onClick={prev}>← Précédent</button>
         <button className="nav-btn primary" onClick={next}>Suivant →</button>
@@ -108,5 +109,4 @@ function App() {
     </div>
   )
 }
-
 export default App
